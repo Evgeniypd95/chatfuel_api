@@ -37,16 +37,13 @@ class Item extends REST_Controller {
     */
     public function index_post()
     {
-        // $input = $this->input->post();
-        // $result = json_decode($input);
-        // var_dump($input);die;
-        $data= array(
-         'title'=>$this->input->post('title'), // here username and password are database fields.
-
-         'description'=>$this->input->post('description'),
-
-    );
-        $this->db->insert('items',$data);
+        $input = $this->input->post();
+        // $result = json_decode($input[1]);
+        $input = file_get_contents("php://input");
+      	header('Content-type: application/json');
+      	$obj = json_decode($input,true);
+      	
+        $this->db->insert('items',$obj);
      
         $this->response(['Item created successfully.'], REST_Controller::HTTP_OK);
     } 
