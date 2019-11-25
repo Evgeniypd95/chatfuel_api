@@ -22,7 +22,7 @@ class Item extends REST_Controller {
 	public function index_get($id = 0)
 	{
         if(!empty($id)){
-            $datapre = $this->db->get_where("global_users", ['id' => $id])->row_array();
+            $datapre = $this->db->get_where("global_users", ['messenger_user_id' => $id])->row_array();
             $data = array();
             $datapost = [
 						'set_attributes' => $obj = [
