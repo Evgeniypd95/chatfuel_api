@@ -22,9 +22,26 @@ class Item extends REST_Controller {
 	public function index_get($id = 0)
 	{
         if(!empty($id)){
-            $data = $this->db->get_where("items", ['id' => $id])->row_array();
+            $datapre = $this->db->get_where("global_users", ['id' => $id])->row_array();
+            $data = array();
+            $datapost = [
+						'set_attributes' => $obj = [
+						'week_message' => $datapre['week_message']
+						]
+					];
+			array_push($data, $datapost);
         }else{
-            $data = $this->db->get("items")->result();
+            $datapre = $this->db->get("global_users")->result();
+            $data = array();
+            foreach ($datapre as $row) {
+            	 $datapost = [
+						'set_attributes' => $obj = [
+						'week_message' => $row->week_message
+						]
+					];
+			array_push($data, $datapost);
+            }
+           
         }
      
         $this->response($data, REST_Controller::HTTP_OK);
@@ -43,7 +60,25 @@ class Item extends REST_Controller {
       	header('Content-type: application/json');
       	$obj = json_decode($input,true);
       	
-        $this->db->insert('items',$obj);
+        $this->db->insert('global_users',$obj);
+     
+        $this->response(['Item created successfully.'], REST_Controller::HTTP_OK);
+    } 
+
+    /**
+     * Get All Data from this method.
+     *
+     * @return Response
+    */
+    public function create_user()
+    {
+        $input = $this->input->post();
+        // $result = json_decode($input[1]);
+        $input = file_get_contents("php://input");
+      	header('Content-type: application/json');
+      	$obj = json_decode($input,true);
+      	
+        $this->db->insert('global_users',$obj);
      
         $this->response(['Item created successfully.'], REST_Controller::HTTP_OK);
     } 

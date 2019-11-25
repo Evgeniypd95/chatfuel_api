@@ -83,6 +83,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 
 	<p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo  (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+	<?php 
+
+	$array1 = array(15,16,17,18,19,20,21,22,23);
+	$array2 = $array1;
+	shuffle($array2);
+	$pairs = array_combine($array1, $array2);
+
+	// var_dump($pairs);
+
+	?>
+	<pre><?php print_r($pairs); ?></pre>
+
 	<?php echo $user_item->title;?>
 </div>
 
