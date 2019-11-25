@@ -41,10 +41,12 @@ class Item extends REST_Controller {
 					];
 			array_push($data, $datapost);
             }
+            // $data->row_array();
+            var_dump($data);die;
            
         }
-     
-        $this->response($data, REST_Controller::HTTP_OK);
+		// print_r($data);die;     
+        $this->response($data[0], REST_Controller::HTTP_OK);
 	}
       
     /**
