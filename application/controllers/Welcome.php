@@ -12,8 +12,11 @@ class Welcome extends CI_Controller {
 	public function index()
 	{	
 		
-		$item = $this->chatfuel_model->get_item(1);
-		$data['user_item'] =  $item;
-		$this->load->view('welcome_message', $data);
+		
+		$this->load->view('welcome_message');
+
+		// $item = $this->chatfuel_model->get_item(1);
+		// $data['user_item'] =  $item;
+		// $this->load->view('welcome_message', $data);
 	}
 }
