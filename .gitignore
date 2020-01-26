@@ -6,4 +6,4 @@ Vagrantfile
 
 license.txt
 
-/application/config/databases.php/
+application/config/database.php
