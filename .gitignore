@@ -5,3 +5,5 @@ Vagrantfile
 .vagrant
 
 license.txt
+
+/application/config/databases.php/

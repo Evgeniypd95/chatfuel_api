@@ -41,11 +41,8 @@ class Item extends REST_Controller {
 					];
 			array_push($data, $datapost);
             }
-            // $data->row_array();
-            var_dump($data);die;
            
-        }
-		// print_r($data);die;     
+        }    
         $this->response($data[0], REST_Controller::HTTP_OK);
 	}
       
@@ -57,7 +54,6 @@ class Item extends REST_Controller {
     public function index_post()
     {
         $input = $this->input->post();
-        // $result = json_decode($input[1]);
         $input = file_get_contents("php://input");
       	header('Content-type: application/json');
       	$obj = json_decode($input,true);
