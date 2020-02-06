@@ -2,10 +2,10 @@
    
 require APPPATH . 'libraries/REST_Controller.php';
      
-class Item extends REST_Controller {
+class Custom_Handler extends REST_Controller {
     
 	  /**
-     * Get All Data from this method.
+     * Constructs
      *
      * @return Response
     */
@@ -15,7 +15,7 @@ class Item extends REST_Controller {
     }
        
     /**
-     * Get All Data from this method.
+     * Get Method, used for getting weekly message
      *
      * @return Response
     */
@@ -47,7 +47,7 @@ class Item extends REST_Controller {
 	}
       
     /**
-     * Get All Data from this method.
+     * Post method, cannot be renamed.
      *
      * @return Response
     */
@@ -62,27 +62,9 @@ class Item extends REST_Controller {
      
         $this->response(['Item created successfully.'], REST_Controller::HTTP_OK);
     } 
-
-    /**
-     * Get All Data from this method.
-     *
-     * @return Response
-    */
-    public function create_user()
-    {
-        $input = $this->input->post();
-        // $result = json_decode($input[1]);
-        $input = file_get_contents("php://input");
-      	header('Content-type: application/json');
-      	$obj = json_decode($input,true);
-      	
-        $this->db->insert('global_users',$obj);
-     
-        $this->response(['Item created successfully.'], REST_Controller::HTTP_OK);
-    } 
      
     /**
-     * Get All Data from this method.
+     * Put method, not supported by Chatfuel
      *
      * @return Response
     */
@@ -90,12 +72,12 @@ class Item extends REST_Controller {
     {
         $input = $this->put();
         $this->db->update('items', $input, array('id'=>$id));
-     
+
         $this->response(['Item updated successfully.'], REST_Controller::HTTP_OK);
     }
      
     /**
-     * Get All Data from this method.
+     * Delete method, not supported by Chatfuel
      *
      * @return Response
     */

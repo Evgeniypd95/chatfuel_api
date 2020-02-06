@@ -71,4 +71,13 @@ class Matching extends CI_Controller {
         return $number * $this->factorial($number - 1);   
     }   
     } 
+    //deactives all users to status 2
+    public function status_flush(){ 
+        return $this->chatfuel_model->flush_status();
+      } 
+
+    //updates users status every sunday when asked to reconfirm for next week
+    public function status($user_id, $status){ 
+          return $this->chatfuel_model->update_status($user_id, $status);
+        } 
 }
