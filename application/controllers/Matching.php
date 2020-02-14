@@ -19,23 +19,23 @@ class Matching extends CI_Controller {
 
         if (sizeof($pre_shuffle) % 2 !==0) {
             
-            $unlucky = rand(0, sizeof($pre_shuffle));
+            $unlucky = rand(0, (sizeof($pre_shuffle)-1));
             
             $this->chatfuel_model->unlucky_update($pre_shuffle[$unlucky]);
             unset($pre_shuffle[$unlucky]);
 
         } 
 
-        $result = $this->sortear_pair($pre_shuffle);
+        $result = $this->create_pair($pre_shuffle);
         
     }
 
-    public function sortear_pair($ids) {
+    public function create_pair($ids) {
         shuffle($ids);
         $result = array_chunk($ids, 2);
 
         if(array_map('array_unique', $result) != $result) {
-            return sortear_pair($ids);
+            return create_pair($ids);
         }
         return $this->publish_pair($result, $ids);
     }
@@ -58,9 +58,23 @@ class Matching extends CI_Controller {
                 $this->chatfuel_model->no_pairs();
                 return false;
             } else {
-                $this->sortear_pair($ids);
+                return $this->create_pair($ids);
             }
         }
+        // else {
+        //     $factorial_numerator=$this->factorial(sizeof($ids));
+        //     $factorial_denominator=$this->factorial(sizeof($ids)-2);
+        //     $combinations_total = $factorial_numerator/(2*$factorial_denominator);
+        //     $total_pairs = $this->chatfuel_model->count_all_pairs();
+
+        //     var_dump($combinations_total);die;
+        //     if ($combinations_total=$total_pairs) {
+        //         $this->chatfuel_model->no_pairs();
+        //         return false;
+        //     } else {
+        //         return $this->create_pair($ids);
+        //     }
+        // }
     }
 
     public function factorial($number){ 
