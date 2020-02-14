@@ -7,33 +7,37 @@ class Chatfuel_model extends CI_Model
   		parent::__construct();
  	}
 
+	//used for testing, gets dummy items from db 
 	public function get_item($id) {
 	  $query = $this->db->get_where('items', array('id' => $id));
 	  return $query->row();
 	}
 
+	//selects active participants
 	public function get_active_user() {
 		$query = $this->db->get_where('global_users', array('status' => 1));
         return $query->result();
 	}
-
+	
+	//checks whether partners met before
 	public function check_unique($pairs){
 		foreach ($pairs as $pair) {
 			sort($pair);
 			$this->db->where('partner_1', $pair[0]);
 			$this->db->where('partner_2', $pair[1]);
 			$counted = $this->db->count_all_results('pairs');
-		}
 			if ($counted>0) {
 				return false;
-			} else {
-				return true;
 			}
+		} return true;
 	}
-
+	
+	//counts all pairs
 	public function count_all_pairs() {
 		return $this->db->count_all_results('pairs');
 	}
+	
+	//sets weekly message attribute to no partner
 	public function no_pairs() {
 		$message = 'Sorry, we could not find any partner for you this week. Please stay tuned for the next week.';
 		$data = array(
@@ -43,6 +47,8 @@ class Chatfuel_model extends CI_Model
 		$this->db->update('global_users', $data);
 		return false;
 	}
+	
+	//sets weekly message attribute to an unlucky update
 	public function unlucky_update($id) {
 		$message = 'Sorry, we did not find you a pair this week due to an odd number of participant, but we will prioritize you the next week! Please, try signup again on Friday.';
 		$data = array(
@@ -51,7 +57,8 @@ class Chatfuel_model extends CI_Model
 		$this->db->where('id', $id);
 		$this->db->update('global_users', $data);
 	}
-
+	
+	//creates week message attribute for pairs
 	public function populate_pair($partners) {
 		
 		sort($partners);
@@ -96,6 +103,25 @@ class Chatfuel_model extends CI_Model
 		$this->db->insert('pairs', $data);
 			
         }
+	}
+
+	//updates users status every sunday when asked to reconfirm for next week
+	public function flush_status() {
+		$data = array(
+			'status' => 2
+	);
+		$this->db->where_not_in('status', 3);
+		$this->db->where_not_in('status', 4);
+		$this->db->update('global_users', $data);
+	}
+
+	//updates users status every sunday when asked to reconfirm for next week
+	public function update_status($user_id, $status) {
+		$data = array(
+			'status' => $status
+	);
+		$this->db->where('messenger_user_id', $user_id);
+		$this->db->update('global_users', $data);
 	}
 
 }
