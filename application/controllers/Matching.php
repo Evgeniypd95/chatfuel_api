@@ -94,4 +94,8 @@ class Matching extends CI_Controller {
     public function status($user_id, $status){ 
           return $this->chatfuel_model->update_status($user_id, $status);
         } 
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f6fbc541fa52531438ae48e2537513f67fc1acc1
