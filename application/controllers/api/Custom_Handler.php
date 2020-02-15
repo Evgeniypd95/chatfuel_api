@@ -59,7 +59,7 @@ class Custom_Handler extends REST_Controller {
       	$obj = json_decode($input,true);
       	
         $this->db->insert('global_users',$obj);
-     
+        
         $this->response(['Item created successfully.'], REST_Controller::HTTP_OK);
     } 
      

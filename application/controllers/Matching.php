@@ -9,24 +9,28 @@ class Matching extends CI_Controller {
         $this->load->database();
     }
 
+    //initiates matching algo, 1-undergraduate, 2-postgraduate
     public function match($callback=null) {
-        $active_users = $this->chatfuel_model->get_active_user();
-        $pre_shuffle = array();
-        foreach ($active_users as $row) {
+        for($i=1; $i<=2; $i++) {
+            $active_users = $this->chatfuel_model->get_active_user($i);
+            // var_dump($active_users);
+            $pre_shuffle = array();
+            foreach ($active_users as $row) {
             
-            array_push($pre_shuffle, $row->id);
+                array_push($pre_shuffle, $row->id);
+            }
+
+            if (sizeof($pre_shuffle) % 2 !==0) {
+            
+                $unlucky = rand(0, (sizeof($pre_shuffle)-1));
+            
+                $this->chatfuel_model->unlucky_update($pre_shuffle[$unlucky]);
+                unset($pre_shuffle[$unlucky]);
+
+            } 
+
+            $result = $this->create_pair($pre_shuffle);
         }
-
-        if (sizeof($pre_shuffle) % 2 !==0) {
-            
-            $unlucky = rand(0, (sizeof($pre_shuffle)-1));
-            
-            $this->chatfuel_model->unlucky_update($pre_shuffle[$unlucky]);
-            unset($pre_shuffle[$unlucky]);
-
-        } 
-
-        $result = $this->create_pair($pre_shuffle);
         
     }
 
@@ -48,19 +52,10 @@ class Matching extends CI_Controller {
             $this->chatfuel_model->populate_pair($row);
             
             } 
-        } else {
-            $factorial_numerator=$this->factorial(sizeof($ids));
-            $factorial_denominator=$this->factorial(sizeof($ids)-2);
-            $combinations_total = $factorial_numerator/(2*$factorial_denominator);
-            $total_pairs = $this->chatfuel_model->count_all_pairs();
-
-            if ($combinations_total=$total_pairs) {
-                $this->chatfuel_model->no_pairs();
-                return false;
-            } else {
+        }  else {
                 return $this->create_pair($ids);
             }
-        }
+
         // else {
         //     $factorial_numerator=$this->factorial(sizeof($ids));
         //     $factorial_denominator=$this->factorial(sizeof($ids)-2);

@@ -14,8 +14,8 @@ class Chatfuel_model extends CI_Model
 	}
 
 	//selects active participants
-	public function get_active_user() {
-		$query = $this->db->get_where('global_users', array('status' => 1));
+	public function get_active_user($type) {
+		$query = $this->db->get_where('global_users', array('status' => 1, 'student_type' => $type));
         return $query->result();
 	}
 	
@@ -71,15 +71,16 @@ class Chatfuel_model extends CI_Model
 		$query = $this->db->select('fb_profile');
 		$query = $this->db->select('first_name');
 		$query = $this->db->select('last_name');
+		$query = $this->db->select('interests');
         $query = $this->db->get('global_users');
         $fb_profiles = $query->result();
 
         var_dump($fb_profiles);
         
-		$message1 = 'Your partner this week is'.' '.$fb_profiles[1]->first_name.' '.$fb_profiles[1]->last_name.'.'.' '.'Message them here:'.$fb_profiles[1]->fb_profile;
-		$message2 = 'Your partner this week is'.' '.$fb_profiles[0]->first_name.' '.$fb_profiles[0]->last_name.'.'.' '.'Message them here:'.$fb_profiles[0]->fb_profile;
+		$message1 = 'Your partner this week is'.' '.$fb_profiles[1]->first_name.' '.$fb_profiles[1]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[1]->interests.'.'.' '.'Message them here: '.$fb_profiles[1]->fb_profile;
+		$message2 = 'Your partner this week is'.' '.$fb_profiles[0]->first_name.' '.$fb_profiles[0]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[0]->interests.'.'.' '.'Message them here: '.$fb_profiles[0]->fb_profile;
 		
-		// var_dump($message1);
+		var_dump($message1);die;
 
 		$data1 = array(
         'week_message' => $message1
@@ -118,7 +119,8 @@ class Chatfuel_model extends CI_Model
 	//updates users status every sunday when asked to reconfirm for next week
 	public function update_status($user_id, $status) {
 		$data = array(
-			'status' => $status
+			'status' => $status,
+			'week_message' => 'N/A'
 	);
 		$this->db->where('messenger_user_id', $user_id);
 		$this->db->update('global_users', $data);
