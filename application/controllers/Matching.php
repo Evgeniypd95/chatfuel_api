@@ -89,4 +89,9 @@ class Matching extends CI_Controller {
     public function status($user_id, $status){ 
           return $this->chatfuel_model->update_status($user_id, $status);
         } 
+
+    //update $1 - messanger id, $2 - what to update, $3 - variable
+    public function update($id, $do){ 
+        echo $id; die;
+      }
 }

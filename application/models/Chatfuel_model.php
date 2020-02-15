@@ -72,6 +72,8 @@ class Chatfuel_model extends CI_Model
 		$query = $this->db->select('first_name');
 		$query = $this->db->select('last_name');
 		$query = $this->db->select('interests');
+		$query = $this->db->select('profile_pic');
+		$query = $this->db->select('messenger_user_id');
         $query = $this->db->get('global_users');
         $fb_profiles = $query->result();
 
@@ -80,16 +82,20 @@ class Chatfuel_model extends CI_Model
 		$message1 = 'Your partner this week is'.' '.$fb_profiles[1]->first_name.' '.$fb_profiles[1]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[1]->interests.'.'.' '.'Message them here: '.$fb_profiles[1]->fb_profile;
 		$message2 = 'Your partner this week is'.' '.$fb_profiles[0]->first_name.' '.$fb_profiles[0]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[0]->interests.'.'.' '.'Message them here: '.$fb_profiles[0]->fb_profile;
 		
-		var_dump($message1);die;
+		// var_dump($message1);die;
 
 		$data1 = array(
-        'week_message' => $message1
+		'week_message' => $message1,
+		'partner_profile_pic' => $fb_profiles[1]->profile_pic,
+		'partner_messenger_id' => $fb_profiles[1]->messenger_user_id	
 		);
 		$this->db->where('id', $partners[0]);
 		$this->db->update('global_users', $data1);
 
 		$data2 = array(
-        'week_message' => $message2
+        'week_message' => $message2,
+		'partner_profile_pic' => $fb_profiles[0]->profile_pic,
+		'partner_messenger_id' => $fb_profiles[0]->messenger_user_id
 		);
 		$this->db->where('id', $partners[1]);
 		$this->db->update('global_users', $data2);
