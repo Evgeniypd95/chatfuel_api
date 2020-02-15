@@ -26,9 +26,7 @@ class Custom_Handler extends REST_Controller {
             $data = array();
             $datapost = [
 						'set_attributes' => $obj = [
-                        'week_message' => $datapre['week_message'],
-                        'partner_profile_pic' => $datapre['partner_profile_pic'],
-                        'partner_messenger_id' => $datapre['partner_messenger_id']
+                        'week_message' => $datapre['week_message']
 						]
 					];
 			array_push($data, $datapost);

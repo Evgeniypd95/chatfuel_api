@@ -91,7 +91,7 @@ class Matching extends CI_Controller {
         } 
 
     //update $1 - messanger id, $2 - what to update, $3 - variable
-    public function update($id, $do){ 
-        echo $id; die;
+    public function update($id, $do, $sh){ 
+        // echo $id; die;
       }
 }
