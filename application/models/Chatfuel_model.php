@@ -83,13 +83,15 @@ class Chatfuel_model extends CI_Model
 		// var_dump($message1);die;
 
 		$data1 = array(
-		'week_message' => $message1	
+		'week_message' => $message1,
+		'partner_profile_id' => $fb_profiles[1]->fb_profile 	
 		);
 		$this->db->where('id', $partners[0]);
 		$this->db->update('global_users', $data1);
 
 		$data2 = array(
-        'week_message' => $message2
+        'week_message' => $message2,
+		'partner_profile_id' => $fb_profiles[0]->fb_profile
 		);
 		$this->db->where('id', $partners[1]);
 		$this->db->update('global_users', $data2);
