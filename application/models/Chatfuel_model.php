@@ -77,8 +77,10 @@ class Chatfuel_model extends CI_Model
 
         var_dump($fb_profiles);
         
-		$message1 = 'Your partner this week is'.' '.$fb_profiles[1]->first_name.' '.$fb_profiles[1]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[1]->interests.'.'.' '.'Message them here: '.$fb_profiles[1]->fb_profile;
-		$message2 = 'Your partner this week is'.' '.$fb_profiles[0]->first_name.' '.$fb_profiles[0]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[0]->interests.'.'.' '.'Message them here: '.$fb_profiles[0]->fb_profile;
+		// $message1 = 'Your partner this week is'.' '.$fb_profiles[1]->first_name.' '.$fb_profiles[1]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[1]->interests.'.'.' '.'Message them here: '.$fb_profiles[1]->fb_profile;
+		// $message2 = 'Your partner this week is'.' '.$fb_profiles[0]->first_name.' '.$fb_profiles[0]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[0]->interests.'.'.' '.'Message them here: '.$fb_profiles[0]->fb_profile;
+		$message1 = 'It is'.' '.$fb_profiles[1]->first_name.' '.$fb_profiles[1]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[1]->interests.'.'.' '.'Message them here: '.$fb_profiles[1]->fb_profile;
+		$message2 = 'It is'.' '.$fb_profiles[0]->first_name.' '.$fb_profiles[0]->last_name.'.'.' '.'They are passionate about '.$fb_profiles[0]->interests.'.'.' '.'Message them here: '.$fb_profiles[0]->fb_profile;
 		
 		// var_dump($message1);die;
 
